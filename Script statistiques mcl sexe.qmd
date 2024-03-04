@@ -131,8 +131,10 @@ mcl$flu <- factor (mcl$flu, levels=c(0,1,9), labels=c("No", "Yes", "NA"))
 mcl$hto <- ifelse(is.na(mcl$hto), 9, mcl$hto)
 mcl$hto <- factor (mcl$hto, levels=c(0,1,9), labels=c("No", "Yes", "NA"))
 
-
 mod <- glm (sexe ~ mabio + rbd + park + halluvis + flu + hto, data = mcl, family = "binomial")
 summary(mod)
+exp(coefficients(mod))
+
+#end
 ```
-Donc au final, après analyse multivariée, il existe des différences de symptômes entre hommes et femmes qui ne sont pas expliquée par des différences de biomarqueurs (cette différence n'est dailleurs plus significative), les hommes ayant plus de syndromes parkinsoniens, et plus de RBD.
+Donc au final, après analyse multivariée, il existe les même différences qu'observées dans la table 1 : donc il existe des différences de symptômes indépendemment des biomarqueurs MA. Les hommes ont à la fin une tendance aussi vers moins d'hallucinations visuelles (p = 0.12). :)
