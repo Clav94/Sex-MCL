@@ -112,4 +112,27 @@ mcl$rbd <- factor (mcl$rbd, levels=c(0,1), labels=c("No", "Yes"))
 mod <- glm (sexe ~ rbd + mabio, data = mcl, family = "binomial")
 summary(mod)
 ```
-= prix nobel
+= prix nobel,
+
+D'ailleurs, pour l'ensemble du modèle, je pense qu'il faut faire : 
+```{r}
+mcl <- read.csv2("data/mcl.csv")
+mcl$sexe <- factor(mcl$sexe, levels=c(1,2), labels=c("Woman", "Man"))
+mcl$rbd <- ifelse(is.na(mcl$rbd), 9, mcl$rbd)
+mcl$rbd <- factor (mcl$rbd, levels=c(0,1,9), labels=c("No", "Yes", "NA"))
+mcl$park <- ifelse(is.na(mcl$park), 9, mcl$park)
+mcl$park <- factor (mcl$park, levels=c(0,1,9), labels=c("No", "Yes", "NA"))
+mcl$mabio <- ifelse(is.na(mcl$mabio), 9, mcl$mabio)
+mcl$mabio <- factor (mcl$mabio, levels=c(0,1,9), labels=c("No", "Yes", "NA"))
+mcl$halluvis <- ifelse(is.na(mcl$halluvis), 9, mcl$halluvis)
+mcl$halluvis <- factor (mcl$halluvis, levels=c(0,1,9), labels=c("No", "Yes", "NA"))
+mcl$flu <- ifelse(is.na(mcl$flu), 9, mcl$flu)
+mcl$flu <- factor (mcl$flu, levels=c(0,1,9), labels=c("No", "Yes", "NA"))
+mcl$hto <- ifelse(is.na(mcl$hto), 9, mcl$hto)
+mcl$hto <- factor (mcl$hto, levels=c(0,1,9), labels=c("No", "Yes", "NA"))
+
+
+mod <- glm (sexe ~ mabio + rbd + park + halluvis + flu + hto, data = mcl, family = "binomial")
+summary(mod)
+```
+Donc au final, après analyse multivariée, il existe des différences de symptômes entre hommes et femmes qui ne sont pas expliquée par des différences de biomarqueurs (cette différence n'est dailleurs plus significative), les hommes ayant plus de syndromes parkinsoniens, et plus de RBD.
